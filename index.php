@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
@@ -15,12 +16,14 @@
         <input type="search" name="search_query" id="1" , minlength=3>
         <input type="submit" value="Найти">
     </form>
+
+    <br>
+
+    
     <table>
 
-        <th>userId</th>
-        <th>id</th>
         <th>title</th>
-        <th>body</th>
+        <th>comment</th>
 
         <?php
 
@@ -38,33 +41,23 @@
             // All finds
             $commentsSearchResult = $dbConnection->query($sqlQuery);
 
-            // Array for tracking already printed posts
-            // It's neccessary if there multiply comments for one post with searched link.
-            $alreadyPrinted = array();
 
+            while ($commentArr = $commentsSearchResult->fetch_assoc()) {
 
-            while ($row = $commentsSearchResult->fetch_assoc()) {
-
-                $postsQuery = "SELECT * FROM posts WHERE id = $row[postid]";
+                $postsQuery = "SELECT * FROM posts WHERE id = $commentArr[postid]";
                 $postsQueryResult = $dbConnection->query($postsQuery);
 
                 while ($searchedPost = $postsQueryResult->fetch_assoc()) {
 
-                    if (!in_array($searchedPost["id"], $alreadyPrinted)) {
-                        // array_push($alreadyPrinted, $searchedPost["id"]);
 
-                        $userId = $searchedPost["userid"];
-                        $id = $searchedPost["id"];
-                        $title = $searchedPost["title"];
-                        $body = $searchedPost["body"];
 
-                        echo "<tr>
-                    <td>$userId</td>
-                    <td>$id</td>
+                    $title = $searchedPost["title"];
+                    $comment = $commentArr['body'];
+
+                    echo "<tr>
                     <td>$title</td>
-                    <td>$body</td>
+                    <td>$comment</td>
                     </tr>";
-                    }
                 }
             }
 
