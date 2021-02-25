@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "php-junior-testdb",
+            "database": "junior_web_dev_test",
+            "username": "root",
+            "password": ""
+        }
+    ]
+}
